@@ -54,11 +54,11 @@ Azure Functions で発生するエラーは、次のいずれかが元になっ�
 
 再試行 ポリシーは特定の関数に定義することができます。特定の関数の構成は、アプリケーション レイヤーレベルの構成よりも優勢されます。
 
-#### Fixed delay retry
+#### <a name="fixed-delay-retry"></a>Fixed delay 再試行
 
 # [C#](#tab/csharp)
 
-Retries require NuGet package [Microsoft.Azure.WebJobs](https://www.nuget.org/packages/Microsoft.Azure.WebJobs) >= 3.0.23
+再試行には NuGet パッケージが必要です [Microsoft.Azure.WebJobs](https://www.nuget.org/packages/Microsoft.Azure.WebJobs) >= 3.0.23
 
 ```csharp
 [FunctionName("EventHubTrigger")]
@@ -71,7 +71,7 @@ public static async Task Run([EventHubTrigger("myHub", Connection = "EventHubCon
 
 # [C# Script](#tab/csharp-script)
 
-Here's the retry policy in the *function.json* file:
+*function.json* ファイルの再試行 ポリシーは以下の通りです:
 
 ```json
 {
@@ -90,7 +90,7 @@ Here's the retry policy in the *function.json* file:
 ```
 # [JavaScript](#tab/javascript)
 
-Here's the retry policy in the *function.json* file:
+*function.json* ファイルの再試行 ポリシーは以下の通りです:
 
 
 ```json
@@ -111,7 +111,7 @@ Here's the retry policy in the *function.json* file:
 
 # [Python](#tab/python)
 
-Here's the retry policy in the *function.json* file:
+*function.json* ファイルの再試行 ポリシーは以下の通りです:
 
 ```json
 {
@@ -131,7 +131,7 @@ Here's the retry policy in the *function.json* file:
 
 # [Java](#tab/java)
 
-Here's the retry policy in the *function.json* file:
+*function.json* ファイルの再試行 ポリシーは以下の通りです:
 
 
 ```json
@@ -151,11 +151,11 @@ Here's the retry policy in the *function.json* file:
 ```
 ---
 
-#### Exponential backoff retry
+#### <a name="exponential-backoff-retry"></a>Exponential backoff 再試行
 
 # [C#](#tab/csharp)
 
-Retries require NuGet package [Microsoft.Azure.WebJobs](https://www.nuget.org/packages/Microsoft.Azure.WebJobs) >= 3.0.23
+再試行には NuGet パッケージが必要です [Microsoft.Azure.WebJobs](https://www.nuget.org/packages/Microsoft.Azure.WebJobs) >= 3.0.23
 
 ```csharp
 [FunctionName("EventHubTrigger")]
@@ -168,7 +168,7 @@ public static async Task Run([EventHubTrigger("myHub", Connection = "EventHubCon
 
 # [C# Script](#tab/csharp-script)
 
-Here's the retry policy in the *function.json* file:
+*function.json* ファイルの再試行 ポリシーは以下の通りです:
 
 ```json
 {
@@ -189,7 +189,7 @@ Here's the retry policy in the *function.json* file:
 
 # [JavaScript](#tab/javascript)
 
-Here's the retry policy in the *function.json* file:
+*function.json* ファイルの再試行 ポリシーは以下の通りです:
 
 ```json
 {
@@ -210,7 +210,7 @@ Here's the retry policy in the *function.json* file:
 
 # [Python](#tab/python)
 
-Here's the retry policy in the *function.json* file:
+*function.json* ファイルの再試行 ポリシーは以下の通りです:
 
 ```json
 {
@@ -231,7 +231,7 @@ Here's the retry policy in the *function.json* file:
 
 # [Java](#tab/java)
 
-Here's the retry policy in the *function.json* file:
+*function.json* ファイルの再試行 ポリシーは以下の通りです:
 
 ```json
 {
@@ -251,13 +251,13 @@ Here's the retry policy in the *function.json* file:
 ```
 ---
 
-|function.json property  |Attribute Property | Description |
+|function.json プロパティ |属性 プロパティ | 説明 |
 |---------|---------|---------| 
-|strategy|n/a|Required. The retry strategy to use. Valid values are `fixedDelay` or `exponentialBackoff`.|
-|maxRetryCount|n/a|Required. The maximum number of retries allowed per function execution. `-1` means to retry indefinitely.|
-|delayInterval|n/a|The delay that will be used between retries when using `fixedDelay` strategy.|
-|minimumInterval|n/a|The minimum retry delay when using `exponentialBackoff` strategy.|
-|maximumInterval|n/a|The maximum retry delay when using `exponentialBackoff` strategy.| 
+|strategy|n/a|必須です。再試行の方法として使用されます。有効な値は、 `fixedDelay` もしくは `exponentialBackoff` です。|
+|maxRetryCount|n/a|必須です。1 回の関数実行で許可される最大再試行回数です。 `-1` は無制限に再試行します。|
+|delayInterval|n/a|`fixedDelay` strategy を使用した際に、再試行の間に使用される遅延です。|
+|minimumInterval|n/a|`exponentialBackoff` strategy を使用した際に、最小の再試行遅延です。|
+|maximumInterval|n/a|`exponentialBackoff` strategy を使用した際に、最大の再試行遅延です。| 
 
 ### Retry limitations during preview
 
