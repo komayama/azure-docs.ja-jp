@@ -29,9 +29,10 @@ Azure Functions で発生するエラーは、次のいずれかが元になっ�
 
 アプリケーションの正常性を監視するには、エラーをキャプチャして発行することが重要です。 関数コードの最上位レベルに、try/catch ブロックを含める必要があります。 catch ブロックでは、エラーをキャプチャして発行できます。
 
-## Retry policies (preview)
+## <a name="retry-policies-preview"></a>再試行 ポリシー (プレビュー)
 
-A retry policy can be defined on any function for any trigger type in your function app.  The retry policy re-executes a function until either successful execution or until the maximum number of retries occur.  Retry policies can be defined for all functions in an app or for individual functions.  By default, a function app won't retry messages (aside from the [specific triggers that have a retry policy on the trigger source](#using-retry-support-on-top-of-trigger-resilience)).  A retry policy is evaluated whenever an execution results in an uncaught exception.  As a best practice, you should catch all exceptions in your code and rethrow any errors that should result in a retry.  Event Hubs and Azure Cosmos DB checkpoints won't be written until the retry policy for the execution has completed, meaning progressing on that partition is paused until the current batch has completed.
+再試行 ポリシーは、関数アプリ内の任意のトリガー タイプの関数にて定義ができます。実行が成功するまで、または最大実行回数まで関数を再実行します。再試行 ポリシーは、関数アプリ内の全て関数もしくは個別の関数にて定義することができます。デフォルトでは、関数アプリはメッセージの再試行を実行しません。（[特定のトリガーソースに再試行 ポリシー](#using-retry-support-on-top-of-trigger-resilience)がある場合は除く）関数実行による例外処理が発生するたびに評価されます。ベスト プラクティスは、コード内のすべての例外をキャッチし、再試行につながるエラーを再実行する必要があります。Event Hub や Azure Cosmos DB チェックポイントは、再試行 ポリシーが完了するまで書き込まれず、そのパーテーションでの処理は、現在のバッチが完了するまで一時停止されます。
+
 
 ### Retry policy options
 
