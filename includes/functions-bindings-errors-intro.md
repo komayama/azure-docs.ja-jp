@@ -39,12 +39,12 @@ Azure Functions で発生するエラーは、次のいずれかが元になっ�
 
 **最大試行回数** は最終的な失敗をする前に再試行される最大回数です。`-1` の値は、無制限に再試行することを示しております。現在の再試行回数はインスタンスのメモリに保存されます。再試行の間にインスタンスの障害が発生する可能性があります。再試行中にインスタンスの障害が発生すると再試行回数が失われます。インスタンスの障害が発生した場合は、トリガーである Event Hub, Azure Cosmos DB や Queue Storage は処理を再開し、再試行回数は 0 回にリセットされ、新しいインスタンス上にてバッチを再試行します。他のトリガーである HTTP やタイマーは、新しいインスタンス上では再試行しません。この最大再試行回数はベストエフォートであることを意味し、まれに最大値以上の再試行を実行をするもしくは HTTP やタイマーなどのトリガーである場合は最大値よりも少なく再試行される可能性があります。
 
-**再試行方法** 再試行の動作を制御します。再試行のオプションは以下の 2 つがサポートされています。
+**再試行方法(strategy)** 再試行の動作を制御します。再試行のオプションは以下の 2 つがサポートされています。
 
-| Option | Description|
+| オプション | 説明 |
 |---|---|
-|**`fixedDelay`**| A specified amount of time is allowed to elapse between each retry,|
-| **`exponentialBackoff`**| The first retry waits for the minimum delay. On subsequent retries, time is added exponentially to the initial duration for each retry, until the maximum delay is reached.  Exponential back-off adds some small randomization to delays to stagger retries in high-throughput scenarios.|
+|**`fixedDelay`**| 再試行の間に指定された時間が許可されます |
+| **`exponentialBackoff`**| 最初の再試行は、最小限の遅延が発生します。その後の再試行では、最大限の遅延が発生するまで、各再試行の初期値に指数関数の時間が追加されます。指数バックオフは高いスループットのシナリオにて再試行時間をずらすために、遅延に小さいランダムな値を追加します。|
 
 #### App level configuration
 
