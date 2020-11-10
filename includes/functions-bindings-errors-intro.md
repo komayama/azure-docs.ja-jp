@@ -46,13 +46,13 @@ Azure Functions で発生するエラーは、次のいずれかが元になっ�
 |**`fixedDelay`**| 再試行の間に指定された時間が許可されます |
 | **`exponentialBackoff`**| 最初の再試行は、最小限の遅延が発生します。その後の再試行では、最大限の遅延が発生するまで、各再試行の初期値に指数関数の時間が追加されます。指数バックオフは高いスループットのシナリオにて再試行時間をずらすために、遅延に小さいランダムな値を追加します。|
 
-#### App level configuration
+#### <a name="app-level-configuration"></a>アプリケーション レイヤーの構成
 
-A retry policy can be defined for all functions in an app [using the `host.json` file](../articles/azure-functions/functions-host-json.md#retry). 
+[`host.json` ファイルを使用して](../articles/azure-functions/functions-host-json.md#retry) アプリケーション内のすべての関数に対して、再試行 ポリシーを定義することができます。
 
-#### Function level configuration
+#### <a name="function-level-configuration"></a>関数レベルの構成
 
-A retry policy can be defined for a specific function.  Function-specific configuration takes priority over app-level configuration.
+再試行 ポリシーは特定の関数に定義することができます。特定の関数の構成は、アプリケーション レイヤーレベルの構成よりも優勢されます。
 
 #### Fixed delay retry
 
