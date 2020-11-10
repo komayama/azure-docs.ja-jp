@@ -33,13 +33,13 @@ Azure Functions で発生するエラーは、次のいずれかが元になっ�
 
 再試行 ポリシーは、関数アプリ内の任意のトリガー タイプの関数にて定義ができます。実行が成功するまで、または最大実行回数まで関数を再実行します。再試行 ポリシーは、関数アプリ内の全て関数もしくは個別の関数にて定義することができます。デフォルトでは、関数アプリはメッセージの再試行を実行しません。（[特定のトリガーソースに再試行 ポリシー](#using-retry-support-on-top-of-trigger-resilience)がある場合は除く）関数実行による例外処理が発生するたびに評価されます。ベスト プラクティスは、コード内のすべての例外をキャッチし、再試行につながるエラーを再実行する必要があります。Event Hub や Azure Cosmos DB チェックポイントは、再試行 ポリシーが完了するまで書き込まれず、そのパーテーションでの処理は、現在のバッチが完了するまで一時停止されます。
 
-### Retry policy options
+### <a name="retry-policy-options"></a>再試行 ポリシーオプション
 
-The following options are available for defining a retry policy.
+再試行 ポリシー を定義するには、以下のオプションを使用することができます。
 
-**Max Retry Count** is the maximum number of times an execution is retried before eventual failure. A value of `-1` means to retry indefinitely. The current retry count is stored in memory of the instance. It's possible that an instance has a failure between retry attempts.  When an instance fails during a retry policy, the retry count is lost.  When there are instance failures, triggers like Event Hubs, Azure Cosmos DB, and Queue storage are able to resume processing and retry the batch on a new instance, with the retry count reset to zero.  Other triggers, like HTTP and timer, don't resume on a new instance.  This means that the max retry count is a best effort, and in some rare cases an execution could be retried more than the maximum, or for triggers like HTTP and timer be retried less than the maximum.
+**最大試行回数** は最終的な失敗をする前に再試行される最大回数です。`-1` の値は、無制限に再試行することを示しております。現在の再試行回数はインスタンスのメモリに保存されます。再試行の間にインスタンスの障害が発生する可能性があります。再試行中にインスタンスの障害が発生すると再試行回数が失われます。インスタンスの障害が発生した場合は、トリガーである Event Hub, Azure Cosmos DB や Queue Storage は処理を再開し、再試行回数は 0 回にリセットされ、新しいインスタンス上にてバッチを再試行します。他のトリガーである HTTP やタイマーは、新しいインスタンス上では再試行しません。この最大再試行回数はベストエフォートであることを意味し、まれに最大値以上の再試行を実行をするもしくは HTTP やタイマーなどのトリガーである場合は最大値よりも少なく再試行される可能性があります。
 
-**Retry Strategy** controls how retries behave.  The following are two supported retry options:
+**再試行方法** 再試行の動作を制御します。再試行のオプションは以下の 2 つがサポートされています。
 
 | Option | Description|
 |---|---|
