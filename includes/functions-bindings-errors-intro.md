@@ -259,11 +259,11 @@ public static async Task Run([EventHubTrigger("myHub", Connection = "EventHubCon
 |minimumInterval|n/a|`exponentialBackoff` strategy を使用した際に、最小の再試行遅延です。|
 |maximumInterval|n/a|`exponentialBackoff` strategy を使用した際に、最大の再試行遅延です。| 
 
-### Retry limitations during preview
+### <a name="retry-limitations-during-preview"></a>プレビュー中につき再試行の制限がございます
 
-- For .NET projects, you may need to manually pull in a version of [Microsoft.Azure.WebJobs](https://www.nuget.org/packages/Microsoft.Azure.WebJobs) >= 3.0.23.
-- In the consumption plan, the app may be scaled down to zero while retrying the final messages in a queue.
-- In the consumption plan, the app may be scaled down while performing retries.  For best results, choose a retry interval <= 00:01:00 and <= 5 retries.
+- .NET プロジェクトでは、[Microsoft.Azure.WebJobs](https://www.nuget.org/packages/Microsoft.Azure.WebJobs) >= 3.0.23 のバージョンを手動で取得する必要がございます。
+- 従量課金プランでは、キュー内の最後のメッセージを再試行する間に、アプリケーションがスケールダウンし 0 になる可能性がございます。
+- 従量課金プランでは、再試行中にアプリケーションがスケールダウンする可能性があります。最適な結果を得るには、再試行間隔 <= 00:01:00 と 再試行回数 <= 5 回です。
 
 ## Using retry support on top of trigger resilience
 
