@@ -251,7 +251,7 @@ public static async Task Run([EventHubTrigger("myHub", Connection = "EventHubCon
 ```
 ---
 
-|function.json プロパティ |属性 プロパティ | 説明 |
+|function.json のプロパティ |属性 のプロパティ | 説明 |
 |---------|---------|---------| 
 |strategy|n/a|必須です。再試行の方法として使用されます。有効な値は、 `fixedDelay` もしくは `exponentialBackoff` です。|
 |maxRetryCount|n/a|必須です。1 回の関数実行で許可される最大再試行回数です。 `-1` は無制限に再試行します。|
@@ -265,14 +265,14 @@ public static async Task Run([EventHubTrigger("myHub", Connection = "EventHubCon
 - 従量課金プランでは、キュー内の最後のメッセージを再試行する間に、アプリケーションがスケールダウンし 0 になる可能性がございます。
 - 従量課金プランでは、再試行中にアプリケーションがスケールダウンする可能性があります。最適な結果を得るには、再試行間隔 <= 00:01:00 と 再試行回数 <= 5 回です。
 
-## Using retry support on top of trigger resilience
+## <a name="using-retry-support-on-top-of-trigger-resilience"></a>トリガーの回復力に加えて再試行をサポートを使用する
 
-The function app retry policy is independent of any retries or resiliency that the trigger provides.  The function retry policy will only layer on top of a trigger resilient retry.  For example, if using Azure Service Bus, by default queues have a message delivery count of 10.  The default delivery count means after 10 attempted deliveries of a queue message, Service Bus will dead-letter the message.  You can define a retry policy for a function that has a Service Bus trigger, but the retries will layer on top of the Service Bus delivery attempts.  
+関数アプリケーションの再試行ポリシーは複数回の再試行もしくはトリガーが提供する回復力とは無関係です。関数の再試行ポリシーは、トリガーの回復力のある再試行上にて階層化されます。例えば、もし Azure Service Bus を使用している場合、デフォルトではキューのメッセージ配信数は 10 になります。デフォルトの配信数は、キューメッセージの配信数が 10 であることを意味しており、Service Bus はメッセージを配信不能にします。Service Bus トリガーを持つ関数の再試行ポリシーを定義することができますが、再試行は、Service Bus 配信の試行の上に重なります。
 
-For instance, if you used the default Service Bus delivery count of 10, and defined a function retry policy of 5.  The message would first dequeue, incrementing the service bus delivery account to 1.  If every execution failed, after five attempts to trigger the same message, that message would be marked as abandoned.  Service Bus would immediately requeue the message, it would trigger the function and increment the delivery count to 2.  Finally, after 50 eventual attempts (10 service bus deliveries * five function retries per delivery), the message would be abandoned and trigger a dead-letter on service bus.
+たとえば、デフォルトの Service Bus 配信数を 10 使用し、関数の再試行ポリシーを 5 と定義したとします。メッセージは最初にデキューされ、Service Bus 配信アカウントを 1 に増加します。すべての実行が失敗した場合、同じメッセージを 5 回トリガーしようとした後、そのメッセージは破棄されたものとしてマークされます。Service Bus はすぐに再キューイングし、関数をトリガーされ配信数を 2 に増加します。最終的に 50 回の再試行後 ( 10 回の Service Bus の配信 * 配信ごとに 5 回の関数の再試行 )、メッセージは破棄され Service Bus にて デッド レター がトリガーされます。
 
-> [!WARNING]
-> It is not recommended to set the delivery count for a trigger like Service Bus Queues to 1, meaning the message would be dead-lettered immediately after a single function retry cycle.  This is because triggers provide resiliency with retries, while the function retry policy is best effort and may result in less than the desired total number of retries.
+> [!警告]
+> Service Bus や キューなどのトリガーの配信数を 1 に設定することは推奨しておりません。これは、単一の関数の再試行サイクルの直後にメッセージが デッド レター になることを意味します。その理由としてトリガーは再試行による回復力を提供するためで、一方で関数の再試行ポリシーはベストエフォートであり、再試行の設定回数より少なくなる可能性がございます。
 
 ### <a name="retry-support"></a>再試行のサポート
 
